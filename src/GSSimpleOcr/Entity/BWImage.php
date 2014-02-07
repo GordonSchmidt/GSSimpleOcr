@@ -75,9 +75,9 @@ class BWImage
     /**
      * Create image
      *
-     * @param string|GSImage\Entity\Image $pixels
-     * @param int                         $width
-     * @param int                         $height
+     * @param string|Image $pixels
+     * @param int          $width
+     * @param int          $height
      */
     public function __construct($pixels = '', $width = 0, $height = 0)
     {
@@ -113,8 +113,8 @@ class BWImage
     /**
      * Create image from image resource
      *
-     * @param GSImage\Entity\Image $image
-     * @param int                  $threshold
+     * @param Image $image
+     * @param int   $threshold
      * @return self
      */
     public function createFromImage(Image $image, $threshold = 127)
