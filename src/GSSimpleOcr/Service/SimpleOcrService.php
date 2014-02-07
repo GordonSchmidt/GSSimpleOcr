@@ -154,11 +154,11 @@ class SimpleOcrService implements OcrServiceInterface
             foreach ($glyphs as $c => $glyph) {
                 $results = $image->findSubImage($glyph);
                 if (is_array($results)) {
-                     $w = $glyph->getWidth();
-                     $h = $glyph->getHeight();
-                     foreach ($results as $result) {
-                         $chars[] = array('text' => $c, 'x' => $result['x'], 'y' => $result['y'], 'w' => $w, 'h' => $h);
-                     }
+                    $w = $glyph->getWidth();
+                    $h = $glyph->getHeight();
+                    foreach ($results as $result) {
+                        $chars[] = array('text' => $c, 'x' => $result['x'], 'y' => $result['y'], 'w' => $w, 'h' => $h);
+                    }
                 }
             }
         }
@@ -212,7 +212,7 @@ class SimpleOcrService implements OcrServiceInterface
                     $latest = $glyph;
                     $words[] = array('glyphs' => $last);
                     $last = array($latest);
-               }
+                }
             }
             if (!empty($last)) {
                 $words[] = array('glyphs' => $last);
@@ -278,7 +278,7 @@ class SimpleOcrService implements OcrServiceInterface
      */
     protected function generateSorter($key)
     {
-        return function($a, $b) use ($key) {
+        return function ($a, $b) use ($key) {
             if ($a[$key] == $b[$key]) {
                 return 0;
             }
@@ -298,9 +298,8 @@ class SimpleOcrService implements OcrServiceInterface
     {
         $values = array();
         foreach ($data as $value) {
-           $values[] = $value[$key];
+            $values[] = $value[$key];
         }
         return implode($seperator, $values);
     }
-
 }

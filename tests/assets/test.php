@@ -9,8 +9,6 @@
  * @license   MIT
  */
 
-use GSSimpleOcr\Exception;
-
 /**
  * Provide test image data.
  *

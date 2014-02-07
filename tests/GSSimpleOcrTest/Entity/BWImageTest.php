@@ -55,7 +55,7 @@ class BWImageTest extends \PHPUnit_Framework_TestCase
     public function testCreateFromDataException($pixels, $width, $height)
     {
         $this->setExpectedException('\GSSimpleOcr\Exception\InvalidArgumentException');
-        $bwImage = new BWImage($pixels, $width, $height);
+        new BWImage($pixels, $width, $height);
     }
 
     /**
@@ -154,8 +154,16 @@ class BWImageTest extends \PHPUnit_Framework_TestCase
     public function provideSubImage()
     {
         return array(
-            array(new BWImage('01110010101111100101', 5, 4), new BWImage('111101111', 3, 3), array(array('x' => 1, 'y' => 0))),
-            array(new BWImage('010101100101011', 5, 3), new BWImage('0111', 2, 2), array(array('x' => 0, 'y' => 0), array('x' => 3, 'y' => 1))),
+            array(
+                new BWImage('01110010101111100101', 5, 4),
+                new BWImage('111101111', 3, 3),
+                array(array('x' => 1, 'y' => 0))
+            ),
+            array(
+                new BWImage('010101100101011', 5, 3),
+                new BWImage('0111', 2, 2),
+                array(array('x' => 0, 'y' => 0), array('x' => 3, 'y' => 1))
+            ),
             array(new BWImage('0110', 2, 2), new BWImage('011011011', 3, 3), array()),
         );
     }

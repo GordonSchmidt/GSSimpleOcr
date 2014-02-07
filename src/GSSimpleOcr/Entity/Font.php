@@ -69,7 +69,7 @@ class Font
         foreach ($glyphs as $char => $glyph) {
             if (is_string($glyph)) {
                 $glyph = new BWImage($glyph, $this->defaultWidth, $this->defaultHeight);
-            } else if (is_array($glyph)) {
+            } elseif (is_array($glyph)) {
                 $glyph = new BWImage($glyph['data'], $glyph['width'], $glyph['height']);
             }
             $this->glyphs[$char] = $glyph;

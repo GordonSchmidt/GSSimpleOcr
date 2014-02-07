@@ -34,7 +34,7 @@ class SimpleOcrServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->service = new SimpleOcrService(array());
+        $this->service = new SimpleOcrService();
     }
 
     /**
@@ -64,8 +64,16 @@ class SimpleOcrServiceTest extends \PHPUnit_Framework_TestCase
             array('width' => 3, 'height' => 3, 'glyphs' => array('+' => '010111010', '-' => '000111000')),
         );
         $fonts = array(
-            new Font(array('width' => 3, 'height' => 3, 'glyphs' => array('*' => new BWImage('000010000', 3, 3), '/' => new BWImage('001010100', 3, 3)))),
-            new Font(array('width' => 3, 'height' => 3, 'glyphs' => array('+' => new BWImage('010111010', 3, 3), '-' => new BWImage('000111000', 3, 3)))),
+            new Font(array(
+                'width' => 3,
+                'height' => 3,
+                'glyphs' => array('*' => new BWImage('000010000', 3, 3), '/' => new BWImage('001010100', 3, 3))
+            )),
+            new Font(array(
+                'width' => 3,
+                'height' => 3,
+                'glyphs' => array('+' => new BWImage('010111010', 3, 3), '-' => new BWImage('000111000', 3, 3))
+            )),
         );
         return array(
             array(null, array()),
@@ -124,7 +132,11 @@ class SimpleOcrServiceTest extends \PHPUnit_Framework_TestCase
         $basePath = dirname(dirname(dirname(__DIR__)));
         return array(
             array($basePath . '/tests/assets/test2.png', array(), '23 567' . PHP_EOL . '01 4 89'),
-            array($basePath . '/vendor/gs/image/tests/assets/test.gif', array('mode' => SimpleOcrService::MODE_GLYPHS), $glyphsResult),
+            array(
+                $basePath . '/vendor/gs/image/tests/assets/test.gif',
+                array('mode' => SimpleOcrService::MODE_GLYPHS),
+                $glyphsResult
+            ),
             array($basePath . '/vendor/gs/image/tests/assets/test.jpg', array('threshold' => 16), '0123456789'),
             array($basePath . '/vendor/gs/image/tests/assets/test.png', array(), '0123456789'),
         );

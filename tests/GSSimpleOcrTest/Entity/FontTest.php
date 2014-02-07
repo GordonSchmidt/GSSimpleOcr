@@ -47,7 +47,10 @@ class FontTest extends \PHPUnit_Framework_TestCase
     public function provideConstruct()
     {
         $config1 = array('0' => '111101111', '1' => '010010010');
-        $config2 = array('0' => array('data' => '111101111', 'width' => 3, 'height' => 3), '1' => array('data' => '010010010', 'width' => 3, 'height' => 3));
+        $config2 = array(
+            '0' => array('data' => '111101111', 'width' => 3, 'height' => 3),
+            '1' => array('data' => '010010010', 'width' => 3, 'height' => 3)
+        );
         $result1 = array('0' => new BWImage('111101111', 3, 3), '1' => new BWImage('010010010', 3, 3));
         return array(
             array(0, 0, array(), array()),
