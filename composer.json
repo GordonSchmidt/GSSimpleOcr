@@ -1,0 +1,26 @@
+{
+    "name": "gs/simple-ocr",
+    "description": "Simple OCR with PHP",
+    "authors": [{"name": "Gordon Schmidt", "email": "schmidt.gordon@web.de"}],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/GordonSchmidt/GSSimpleOcr",
+    "keywords": ["php", "ocr"],
+    "autoload": {
+        "psr-0": {
+            "GSSimpleOcr": "src/",
+            "GSSimpleOcrTest": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "gs/ocr": "~0.1",
+        "gs/image": "~0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7",
+        "phpmd/phpmd": "~1.5",
+        "squizlabs/php_codesniffer": "~1.5",
+        "satooshi/php-coveralls": "~0.6"
+    }
+}
