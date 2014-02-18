@@ -14,7 +14,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "gs/ocr": "~0.1",
+        "gs/ocr": "~0.1.2",
         "gs/image": "~0.1"
     },
     "require-dev": {

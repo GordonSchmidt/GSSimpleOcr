@@ -11,8 +11,8 @@
  */
 return array(
     'service_manager' => array(
-        'invocables' => array(
-            'service.orc.simple' => 'GSSimpleOcr\Service\SimpleOcrService',
+        'invokables' => array(
+            'service.ocr.simple' => 'GSSimpleOcr\Service\SimpleOcrService',
         ),
     ),
 );
