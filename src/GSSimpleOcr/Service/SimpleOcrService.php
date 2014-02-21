@@ -76,6 +76,12 @@ class SimpleOcrService implements OcrServiceInterface
         if (isset($config['fonts'])) {
             $this->setFonts($config['fonts']);
         }
+        if (isset($config['maxYVariation'])) {
+            $this->maxYVariation = $config['maxYVariation'];
+        }
+        if (isset($config['maxXVariation'])) {
+            $this->maxXVariation = $config['maxXVariation'];
+        }
     }
 
     /**
@@ -99,6 +105,9 @@ class SimpleOcrService implements OcrServiceInterface
         }
         $image = new Image($image);
         $bwImage = new BWImage($image, $threshold);
+        if (isset($options['rotate']) && in_array($options['rotate'], array(-90, 90, 180, 270))) {
+            $bwImage->rotate($options['rotate']);
+        }
         return $this->workflow($bwImage, $mode, array(
             'recognizeGlyphs',
             'recognizeLines',

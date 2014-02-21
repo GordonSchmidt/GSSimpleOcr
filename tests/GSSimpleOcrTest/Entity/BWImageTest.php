@@ -99,6 +99,48 @@ class BWImageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test creation from data
+     *
+     * @param string $pixelsBefore
+     * @param int    $widthBefore
+     * @param int    $heightBefore
+     * @param int    $rotation
+     * @param int    $iterations
+     * @param string $pixelsAfter
+     * @param int    $widthAfter
+     * @param int    $heightAfter
+     * @covers \GSSimpleOcr\Entity\BWImage::rotate
+     * @dataProvider provideValidRotate
+     */
+    public function testRotate($pixelsBefore, $widthBefore, $heightBefore, $rotation, $iterations, $pixelsAfter, $widthAfter, $heightAfter)
+    {
+        $bwImage = new BWImage($pixelsBefore, $widthBefore, $heightBefore);
+        for ($i = 0; $i < $iterations; $i++) {
+            $bwImage->rotate($rotation);
+        }
+        $this->assertSame($pixelsAfter, $bwImage->getPixels());
+        $this->assertSame($widthAfter, $bwImage->getWidth());
+        $this->assertSame($heightAfter, $bwImage->getHeight());
+    }
+
+    /**
+     * Test creation from data
+     *
+     * @param string $pixels
+     * @param int    $width
+     * @param int    $height
+     * @param int    $rotation
+     * @covers \GSSimpleOcr\Entity\BWImage::rotate
+     * @dataProvider provideInvalidRotate
+     */
+    public function testRotateException($pixels, $width, $height, $rotation)
+    {
+        $this->setExpectedException('\GSSimpleOcr\Exception\InvalidArgumentException');
+        $bwImage = new BWImage($pixels, $width, $height);
+        $bwImage->rotate($rotation);
+    }
+
+    /**
      * Provide valid data for creation
      *
      * @return array
@@ -165,6 +207,34 @@ class BWImageTest extends \PHPUnit_Framework_TestCase
                 array(array('x' => 0, 'y' => 0), array('x' => 3, 'y' => 1))
             ),
             array(new BWImage('0110', 2, 2), new BWImage('011011011', 3, 3), array()),
+        );
+    }
+
+    /**
+     * Provide data for rotation
+     *
+     * @return array
+     */
+    public function provideValidRotate()
+    {
+        return array(
+            array('100001000010', 4, 3, 90, 1, '000001010100', 3, 4),
+            array('100001000010', 4, 3, -90, 3, '000001010100', 3, 4),
+            array('100001000010', 4, 3, 180, 1, '010000100001', 4, 3),
+            array('100001000010', 4, 3, 270, 1, '001010100000', 3, 4),
+        );
+    }
+
+    /**
+     * Provide invalid data for rotation
+     *
+     * @return array
+     */
+    public function provideInvalidRotate()
+    {
+        return array(
+            array('100001000010', 4, 3, 45),
+            array('100001000010', 4, 3, -127),
         );
     }
 }

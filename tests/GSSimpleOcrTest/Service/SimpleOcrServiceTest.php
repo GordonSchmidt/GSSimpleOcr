@@ -42,14 +42,18 @@ class SimpleOcrServiceTest extends \PHPUnit_Framework_TestCase
      *
      * @param array $config
      * @param array $fonts
+     * @param int   $maxXVariation
+     * @param int   $maxYVariation
      * @covers \GSSimpleOcr\Service\SimpleOcrService::setConfig
      * @covers \GSSimpleOcr\Service\SimpleOcrService::setFonts
      * @dataProvider provideConfig
      */
-    public function testSetConfig($config, $fonts)
+    public function testSetConfig($config, $fonts, $maxXVariation, $maxYVariation)
     {
         $this->service->setConfig($config);
         $this->assertAttributeEquals($fonts, 'fonts', $this->service);
+        $this->assertAttributeEquals($maxXVariation, 'maxXVariation', $this->service);
+        $this->assertAttributeEquals($maxYVariation, 'maxYVariation', $this->service);
     }
 
     /**
@@ -76,11 +80,12 @@ class SimpleOcrServiceTest extends \PHPUnit_Framework_TestCase
             )),
         );
         return array(
-            array(null, array()),
-            array(array(), array()),
-            array(array('fonts' => array()), array()),
-            array(array('fonts' => $fontsConfig), $fonts),
-            array(array('fonts' => $fonts), $fonts),
+            array(null, array(), 2, 1),
+            array(array(), array(), 2, 1),
+            array(array('maxXVariation' => 3, 'maxYVariation' => 4), array(), 3, 4),
+            array(array('fonts' => array()), array(), 2, 1),
+            array(array('fonts' => $fontsConfig), $fonts, 2, 1),
+            array(array('fonts' => $fonts), $fonts, 2, 1),
         );
     }
 
@@ -132,6 +137,7 @@ class SimpleOcrServiceTest extends \PHPUnit_Framework_TestCase
         $basePath = dirname(dirname(dirname(__DIR__)));
         return array(
             array($basePath . '/tests/assets/test2.png', array(), '23 567' . PHP_EOL . '01 4 89'),
+            array($basePath . '/tests/assets/test2.png', array('rotate' => 90), ''),
             array(
                 $basePath . '/vendor/gs/image/tests/assets/test.gif',
                 array('mode' => SimpleOcrService::MODE_GLYPHS),

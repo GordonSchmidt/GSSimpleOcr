@@ -98,7 +98,7 @@ class BWImage
      */
     public function createFromData($pixels, $width, $height)
     {
-        if (!is_string($pixels) || 0 !== preg_match('/[^01]/', $pixels)) {
+        if (!is_string($pixels) || 0 !== preg_match('/[^.01]/', $pixels)) {
             throw new Exception\InvalidArgumentException('invalid pixel string');
         }
         if (!is_int($width) || !is_int($height)  || strlen($pixels) !== $width * $height) {
@@ -155,14 +155,55 @@ class BWImage
     }
 
     /**
-     * Get pixels als regular expression to find in a bigger image
+     * Rotate image
+     * @param int $angle
+     */
+    public function rotate($angle)
+    {
+        switch ($angle) {
+            case 90:
+                $pixels = '';
+                for ($x = $this->width - 1; $x >= 0; $x--) {
+                    for ($y = 0; $y < $this->height; $y++) {
+                        $pixels .= $this->pixels[$y * $this->width + $x];
+                    }
+                }
+                $this->pixels = $pixels;
+                $width = $this->height;
+                $this->height = $this->width;
+                $this->width = $width;
+                break;
+            case 180:
+                $this->pixels = strrev($this->pixels);
+                break;
+            case -90:
+            case 270:
+                $pixels = '';
+                for ($x = 0; $x < $this->width; $x++) {
+                    for ($y = $this->height - 1; $y >= 0; $y--) {
+                        $pixels .= $this->pixels[$y * $this->width + $x];
+                    }
+                }
+                $this->pixels = $pixels;
+                $width = $this->height;
+                $this->height = $this->width;
+                $this->width = $width;
+                break;
+            default:
+                throw new Exception\InvalidArgumentException('unsupported rotation angle ' . $angle);
+                break;
+        }
+    }
+
+    /**
+     * Get pixels as regular expression to find in a bigger image
      *
      * @param int $width
      * @return string
      */
     public function getAsRegExp($width)
     {
-        return '/' . implode('.{' . ($width - $this->width) . '}', str_split($this->pixels, $this->width)) . '/';
+        return '/(?=' . implode('.{' . ($width - $this->width) . '}', str_split($this->pixels, $this->width)) . ')/';
     }
 
     /**
