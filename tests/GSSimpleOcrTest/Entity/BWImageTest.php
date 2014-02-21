@@ -101,26 +101,26 @@ class BWImageTest extends \PHPUnit_Framework_TestCase
     /**
      * Test creation from data
      *
-     * @param string $pixelsBefore
-     * @param int    $widthBefore
-     * @param int    $heightBefore
+     * @param string $bPixels
+     * @param int    $bWidth
+     * @param int    $bHeight
      * @param int    $rotation
      * @param int    $iterations
-     * @param string $pixelsAfter
-     * @param int    $widthAfter
-     * @param int    $heightAfter
+     * @param string $aPixels
+     * @param int    $aWidth
+     * @param int    $aHeight
      * @covers \GSSimpleOcr\Entity\BWImage::rotate
      * @dataProvider provideValidRotate
      */
-    public function testRotate($pixelsBefore, $widthBefore, $heightBefore, $rotation, $iterations, $pixelsAfter, $widthAfter, $heightAfter)
+    public function testRotate($bPixels, $bWidth, $bHeight, $rotation, $iterations, $aPixels, $aWidth, $aHeight)
     {
-        $bwImage = new BWImage($pixelsBefore, $widthBefore, $heightBefore);
+        $bwImage = new BWImage($bPixels, $bWidth, $bHeight);
         for ($i = 0; $i < $iterations; $i++) {
             $bwImage->rotate($rotation);
         }
-        $this->assertSame($pixelsAfter, $bwImage->getPixels());
-        $this->assertSame($widthAfter, $bwImage->getWidth());
-        $this->assertSame($heightAfter, $bwImage->getHeight());
+        $this->assertSame($aPixels, $bwImage->getPixels());
+        $this->assertSame($aWidth, $bwImage->getWidth());
+        $this->assertSame($aHeight, $bwImage->getHeight());
     }
 
     /**
